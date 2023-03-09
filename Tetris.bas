@@ -12,8 +12,20 @@ Public Const MAX_ROW = 26
 Public Const MIN_COL = 5
 Public Const MAX_COL = 16
 
-Declare Function GetAsyncKeyState Lib "User32.dll" (ByVal vKey As Long) As Long
-Declare Sub Sleep Lib "kernel32" (ByVal dwMilliseconds As Long)
+#If VBA7 Then
+    'declare virtual key event listener
+    Private Declare PtrSafe Function GetAsyncKeyState Lib "user32" _
+            (ByVal vKey As Long) As Integer
+#Else
+    'declare virtual key event listener
+    Private Declare Function GetAsyncKeyState Lib "user32" _
+            (ByVal vKey As Long) As Integer
+#End If
+#If VBA7 Then
+    Declare PtrSafe Sub Sleep Lib "kernel32" (ByVal dwMilliseconds As LongPtr)
+#Else
+    Declare Sub Sleep Lib "kernel32" (ByVal dwMilliseconds As Long)
+#End If
 
 Const VK_LEFT As Long = 37
 Const VK_DOWN As Long = 40
